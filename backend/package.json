@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf ./dist",
+    "build": "./node_modules/.bin/tsc -p .",
+    "dev": "nodemon ./dist/server.js",
+    "debug": "nodemon --inspect ./dist/server.js",
+    "start": "node ./dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "isomorphic-fetch": "^3.0.0",
+    "mongoose": "^5.11.9",
+    "nodemon": "^2.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^10.17.50",
+    "@types/node-fetch": "^2.5.7",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.2"
+  }
+}
