@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { GetServerSideProps } from 'next'
 import fetch from "isomorphic-fetch";
 const api_host = process.env.API_HOST ?? 'localhost'
-const api_port = process.env.API_PORT ?? '8080'
+const api_port = process.env.API_PORT ?? 8080
 
 function HealthPage({ health }) {
   let status = `Api is ${health.ok}, Mongo is ${health.mongo}`

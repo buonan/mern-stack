@@ -1,13 +1,51 @@
 
-import Link from 'next/link'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import InboxIcon from '@material-ui/icons/Inbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
+
+function SimpleList() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      Welcome!
+      <List component="nav" aria-label="secondary mailbox folders">
+        <ListItem button>
+          <ListItemText primary="Trash" />
+        </ListItem>
+        <ListItemLink href="/users">
+          <ListItemText primary="Users" />
+        </ListItemLink>
+        <ListItemLink href="/blogs">
+          <ListItemText primary="Blogs" />
+        </ListItemLink>
+      </List>
+    </div>
+  );
+}
 
 function HomePage() {
   return (
     <div>
-      <div>Welcome to Next.tsx!</div>
-      <Link href="/users">
-        <a>Users</a>
-      </Link>
+      <SimpleList />
     </div>
   )
 }

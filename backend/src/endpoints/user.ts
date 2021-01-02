@@ -24,8 +24,9 @@ module.exports = function (app) {
       const user = await userModel.findById(req.params.id);
       if (!user) res.status(404).send("No item found")
       res.send(user);
-    } catch (err) {
-      res.status(500).send(err);
+    } catch (e) {
+      console.log(`GetUser error ${e}`)
+      res.status(500).send(e);
     }
   }
 
@@ -35,8 +36,9 @@ module.exports = function (app) {
       const user = new userModel(req.body);
       await user.save();
       res.send(user);
-    } catch (err) {
-      res.status(500).send(err);
+    } catch (e) {
+      console.log(`CreateUser error ${e}`)
+      res.status(500).send(e);
     }
   }
 
@@ -44,10 +46,12 @@ module.exports = function (app) {
   async function DeleteUser(req, res) {
     try {
       const user = await userModel.findByIdAndDelete(req.params.id)
-      if (!user) res.status(404).send("No item found")
-      res.status(200).send()
-    } catch (err) {
-      res.status(500).send(err)
+      if (!user) {
+        res.status(200).send()
+      }
+    } catch (e) {
+      console.log(`DeleteUser error ${e}`)
+      res.status(500).send(e)
     }
   }
 
@@ -58,8 +62,9 @@ module.exports = function (app) {
         if (!updated) res.status(404).send("No item found")
         res.send(updated);
       })
-    } catch (err) {
-      res.status(500).send(err)
+    } catch (e) {
+      console.log(`UpdateUser error ${e}`)
+      res.status(500).send(e)
     }
   }
 }
