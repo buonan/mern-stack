@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf ./dist",
     "build": "./node_modules/.bin/tsc -p .",
-    "dev": "nodemon ./dist/server.js",
-    "debug": "nodemon --inspect ./dist/server.js",
+    "dev": "npm run build && nodemon ./dist/server.js",
+    "debug": "npm run build && nodemon --inspect-brk ./dist/server.js",
     "start": "node ./dist/server.js"
   },
   "keywords": [],

@@ -62,10 +62,10 @@ function MyForm() {
   return (
     <Form>
       <div>
-        <InputField field="Name" validate={validateField} />
+        <InputField field="name" validate={validateField} />
       </div>
       <div>
-        <InputField field="Password" validate={validateField} />
+        <InputField field="password" validate={validateField} />
       </div>
 
       <div>
@@ -86,13 +86,15 @@ function Item(user) {
 
   return (
     <div>
-      <input type='text' value={userState._id} />
-      <input type='text' value={userState.Name} onChange={(e) => {
+      <input type='text' value={userState._id} onChange={(e) => {
+        e.preventDefault()
+      }} />
+      <input type='text' value={userState.name} onChange={(e) => {
         e.preventDefault()
         console.log(`onchange!`)
         setUser({
           ...userState,
-          Name: e.target.value,
+          name: e.target.value,
         })
       }} />
       <Button {...userState} onClick={(e) => {

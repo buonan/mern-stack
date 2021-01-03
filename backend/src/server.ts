@@ -5,6 +5,8 @@ var app = express();
 var port = process.env.PORT || 8080;
 const mongo_host = process.env.MONGO_HOST === undefined ? 'localhost' : process.env.MONGO_HOST
 const mongo_port = process.env.MONGO_PORT === undefined ? '27017' : process.env.MONGO_PORT
+const mongo_root_username = process.env.MONGO_INITDB_ROOT_USERNAME ?? 'root'
+const mongo_root_password = process.env.MONGO_INITDB_ROOT_PASSWORD ?? 'example'
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
@@ -17,14 +19,18 @@ app.use(cors());
 
 // mongodb connection
 mongoose.Promise = global.Promise;
+
 // warning: root:password!!
-mongoose.connect(`mongodb://root:example@${mongo_host}:${mongo_port}`, {
+const url = `mongodb://${mongo_root_username}:${mongo_root_password}@${mongo_host}:${mongo_port}`;
+console.log(`${url}`)
+mongoose.connect(`${url}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   keepAlive: true,
   useCreateIndex: true,
   useFindAndModify: false,
-});
+}).then(() => console.log("Connected"))
+.catch(err => console.log(err));
 
 // route endpoints
 require('./endpoints')(app);

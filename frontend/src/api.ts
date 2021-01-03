@@ -22,12 +22,20 @@ function updateOptions(options) {
 }
 
 function _fetch(url, options?) {
-  return fetch(url, updateOptions(options));
+  return fetch(url, updateOptions(options)).then((res) => {
+    if (res.status >= 400 && res.status < 600) {
+      throw new Error("Bad response from server");
+    }
+    return res;
+  })
+  .catch(err => {
+    console.log(`_fetch error ${err}`)
+  })
 }
 
 export function getAllUsers() {
   return _fetch(`${serverSideApiUrl}/users`)
-    .then(res => res.json());
+    .then(res => res.json())
 }
 
 export function createUser(user) {

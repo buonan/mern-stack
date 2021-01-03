@@ -11,7 +11,7 @@ module.exports = function (app) {
   // curl localhost:8080/users
   async function GetUsers(req, res) {
     try {
-      const users = await userModel.find({});
+      let users = await userModel.find({});
       res.send(users);
     } catch (err) {
       res.status(500).send(err);
@@ -34,7 +34,11 @@ module.exports = function (app) {
   async function CreateUser(req, res) {
     try {
       const user = new userModel(req.body);
-      await user.save();
+      await user.save((e, data) => {
+        if (e) {
+          return console.error(e)
+        }
+      })
       res.send(user);
     } catch (e) {
       console.log(`CreateUser error ${e}`)
