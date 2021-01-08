@@ -1,6 +1,7 @@
 .default: build
 
 build:
+	npm run build
 	docker build -t backend .
 
 run:

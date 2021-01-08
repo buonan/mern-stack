@@ -1,13 +1,15 @@
 import fetch from "isomorphic-fetch";
 const dev = process.env.NODE_ENV !== 'production';
-const API_HOST = process.env.API_HOST || 'localhost'
-const API_PORT = process.env.API_PORT || 8080
+const SERVER_SIDE_API_HOST = process.env.SERVER_SIDE_API_HOST || 'localhost'
+const SERVER_SIDE_API_PORT = process.env.SERVER_SIDE_API_PORT || 8080
+const CLIENT_SIDE_API_HOST = process.env.CLIENT_SIDE_API_HOST || 'localhost'
+const CLIENT_SIDE_API_PORT = process.env.CLIENT_SIDE_API_PORT || 8080
 const SERVER_NAME = 'foo'
 
 //const serverSideApiUrl = `http://${API_HOST}:${API_PORT}`
-const serverSideApiUrl = dev == true ? `http://localhost:${API_PORT}` : `http://${API_HOST}:${API_PORT}`
+const serverSideApiUrl = dev == true ? `http://${CLIENT_SIDE_API_HOST}:${CLIENT_SIDE_API_PORT}` : `http://${SERVER_SIDE_API_HOST}:${SERVER_SIDE_API_PORT}`
 //const clientSideApiUrl = `http://www.${SERVER_NAME}.com/api`
-const clientSideApiUrl = dev === true ? `http://localhost:${API_PORT}` : `http://www.${SERVER_NAME}.com/api`
+const clientSideApiUrl = dev === true ? `http://${CLIENT_SIDE_API_HOST}:${CLIENT_SIDE_API_PORT}` : `http://${CLIENT_SIDE_API_HOST}:${CLIENT_SIDE_API_PORT}`
 
 function updateOptions(options) {
   const update = {

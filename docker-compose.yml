@@ -2,20 +2,27 @@
 version: '3.1'
 
 services:
+
   frontend:
     image: frontend
-    links:
-      - backend
     ports:
-      - 3000:3000
+      - 3000
+    networks:
+      - front-tier
+      - back-tier
 
   backend:
     image: backend
     ports:
-      - 8080:8080
+      - 8080
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    depends_on:
+      - mongo
+    networks:
+      - front-tier
+      - back-tier
 
   mongo:
     image: mongo
@@ -28,6 +35,32 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - ./mongo-data:/data/db
+    networks:
+      - back-tier
+
+  lbweb:
+    image: dockercloud/haproxy
+    ports:
+      - 3000:80
+      - 1936:1936
+    links:
+      - frontend
+    networks:
+      - front-tier
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  lbapi:
+    image: dockercloud/haproxy
+    ports:
+      - 8080:80
+      - 1937:1936
+    links:
+      - backend
+    networks:
+      - back-tier
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   mongo-express:
     image: mongo-express
@@ -37,3 +70,9 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge

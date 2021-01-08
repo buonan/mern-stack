@@ -3,6 +3,9 @@ FROM node:12
 # Create app directory
 WORKDIR /app
 
+ENV MONGO_HOST mongo
+ENV MONGO_PORT 27017
+
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
@@ -13,7 +16,7 @@ RUN npm install
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . .
+COPY ./dist .
 
 EXPOSE 8080
 CMD [ "node", "server.js" ]
